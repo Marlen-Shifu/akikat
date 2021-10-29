@@ -1,0 +1,72 @@
+{% load static %}
+
+<nav class="navbar">
+        <div class="container">
+            <div class="navbar__body">
+                <div class="navbar__logo">
+                    <a href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" alt="logo"></a>
+                </div>
+                <div class="navbar__time">
+                    <div class="navbar__time-01 ">
+                        <p>Таң</p>
+                        <p>{{ Fajr }}</p>
+                    </div>
+                    <div class="navbar__time-02">
+                        <p>Күн</p>
+                        <p>{{ Sunrise }}</p>
+                    </div>
+                    <div class="navbar__time-03 time-now">
+                        <p>Бесін</p>
+                        <p>{{ Dhuhr }}</p>
+                    </div>
+                    <div class="navbar__time-04">
+                        <p>Екінті</p>
+                        <p>{{ Asr }}</p>
+                    </div>
+                    <div class="navbar__time-05">
+                        <p>Ақшам</p>
+                        <p>{{ Maghrib }}</p>
+                    </div>
+                    <div class="navbar__time-05">
+                        <p>Құптан</p>
+                        <p>{{ Isha }}</p>
+                    </div>
+                </div>
+                <div class="navbar__menu">
+                    <form method="get">
+                        <select  id="selectbox" data-selected="{{ city }}" name="gorod" onchange="this.form.submit()">
+                            <option value="Алматы" {% if city == "Алматы" %}selected{% endif %}>Алматы</option>
+                            <option value="Нур-Султан" {% if city == "Нур-Султан" %}selected{% endif %}>Нур-Султан</option>
+                            <option value="Актау" {% if city == "Актау" %}selected{% endif %}>Ақтау</option>
+                            <option value="Актобе" {% if city == "Актобе" %}selected{% endif %}>Ақтөбе</option>
+                            <option value="Атырау" {% if city == "Атырау" %}selected{% endif %}>Атырау</option>
+                            <option value="Караганда" {% if city == "Караганда" %}selected{% endif %}>Қарағанды</option>
+                            <option value="Костанай" {% if city == "Костанай" %}selected{% endif %}>Қостанай</option>
+                            <option value="Кызылорда" {% if city == "Кызылорда" %}selected{% endif %}>Қызылорда</option>
+                            <option value="Усть-Каменогорск" {% if city == "Усть-Каменогорск" %}selected{% endif %}>Өскемен</option>
+                            <option value="Павлодар" {% if city == "Павлодар" %}selected{% endif %}>Павлодар</option>
+                            <option value="Петропавловск" {% if city == "Петропавловск" %}selected{% endif %}>Петропавл</option>
+                            <option value="Туркестан" {% if city == "Туркестан" %}selected{% endif %}>Түркістан</option>
+                            <option value="Тараз" {% if city == "Тараз" %}selected{% endif %}>Тараз</option>
+                            <option value="Шымкент" {% if city == "Шымкент" %}selected{% endif %}>Шымкент</option>
+                            <option value="Уральск" {% if city == "Уральск" %}selected{% endif %}>Орал</option>
+                      </select>
+                    </form>
+
+                      <!--<select id="selectbox" data-selected="">
+                        <option value="" selected="selected">Қазақша</option>
+                        <option value="1">Русский</option>
+                        <option value="2">English</option>
+                      </select>-->
+                   <a href="#!" class="nav_search-btn"><i class="fas fa-search"></i></a>
+                </div>
+            </div>
+        </div>
+         <div class="searchForm">
+            <form action="{% url 'search' %}" method="get">
+                <input class="search-type" type="search" placeholder="Мақала тақырыбы ..." required name="q">
+                <input class="search-form" type="submit" value="Іздеу">
+                <p class="close-form">Жабу</p>
+            </form>
+        </div>
+    </nav>

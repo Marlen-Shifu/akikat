@@ -1,0 +1,28 @@
+{% load static %}
+
+{% load get_date %}
+
+<nav class="navbar">
+        <div class="container">
+            <div class="navbar__body">
+                <div class="navbar__logo">
+                    <a href="{% url 'home' %}"><img src="{% static 'img/logo.png' %}" alt="logo"></a>
+                </div>
+                <div class="navbar__menu">
+                   <div class="info-today">
+                       {% get_date as date %}
+                       <p>{{ date.gr }}</p>
+                       <p>{{ date.hj }}</p>
+                   </div>
+                   <a href="#!" class="nav_search-btn"><i class="fas fa-search"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="searchForm">
+            <form action="{% url 'search' %}" method="get">
+                <input class="search-type" type="search" placeholder="Мақала тақырыбы ..." required name="q">
+                <input class="search-form" type="submit" value="Іздеу">
+                <p class="close-form">Жабу</p>
+            </form>
+        </div>
+    </nav>

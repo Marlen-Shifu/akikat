@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Akikat.kz - рухани танымдық, ғылыми портал</title>
+</head>
+<body>
+
+    {% include 'components/header.html' %}
+
+    <section class="articel-inside-bg">
+        <div class="container">
+            <section class="article-inside__main">
+                <div class="article-inside__top">
+                    <div class="article-inside__share">
+                        <div class="article-inside__share_text"><p>мақаламен бөлісу</p></div>
+                        <div class="article-inside__share_soc">
+                            <a href="#!" data-sharer="whatsapp" data-title="Поделиться через WhatsApp" data-url="https://"><i class="fab fa-whatsapp"></i></a>
+                            <a href="#!" data-sharer="telegram" data-title="Поделиться через Telegram" data-url="https://"><i class="fab fa-telegram-plane"></i></a>
+                            <a href="#!" data-sharer="facebook" data-hashtag="akikat.kz" data-url="https://"><i class="fab fa-facebook" ></i></a>
+                            <a href="#" data-sharer="twitter" data-title="Поделиться через Twitter" data-hashtags="akikat.kz" data-url="https://"><i class="fab fa-twitter"></i></a>
+                        </div>
+                    </div>
+                    <div class="article-inside__title">
+                        <h3>{{ object.name }}</h3>
+                    </div>
+                </div>
+                <div class="article-inside__content">
+                    <div class="article-inside__content-top">
+                        <img src="{{ object.preview.url }}" alt="">
+                        <p>     {{ object.short_description }}</p>
+                    </div>
+                    <div class="article-inside__content-bottom">   
+                        <p>{{ object.body|safe }}</p>
+                    </div>
+                </div>
+                <div class="article-inside__bottom">
+                    <div class="article-inisde__bottom-left">
+                        <a href="#!" onclick="increaseLike()" class="likeBtn"><i class="far fa-heart"></i> {{ object.likes }}</a>
+                        <!-- <a href="#!"><i class="fab fa-twitch"></i> Түсініктемелерді көру</a> -->
+                    </div>
+                    <div class="article-inisde__bottom-right">
+                        <a class="print-article" href="#!" onclick="printBtnOnClick()"><i class="fas fa-print"></i></a>
+                    </div>
+                </div>
+            </section>
+        </div>
+        <!-- <section class="comments">
+            <div class="container">
+                <div class="comments__body">
+                    <div class="comments__title">
+                        <h3><i class="fab fa-twitch"></i> Түсініктемелер</h3>
+                        <hr>
+                    </div>
+                    <div class="comment__item">
+                        <h3>Ернар Омаров</h3>
+                        <h5>32 минут назад</h5>
+                        <p>Өте қызық, танымдық хикая. Балаларға көбірек оқыту керек. Сайтта өте қолайлы жасалған,  оқуға ыңғайлы . Білім алуымызға себепкер болып отырған жандарға алғысым шексіз!</p>
+                        <div class="comment__item-btn">
+                            <a href="#">Жауап беру</a>
+                            <a href="#">Шағымдану</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section> -->
+        <section class="recommend">
+            <div class="container">
+                <div class="recommend__body">
+                    <div class="recommend__title">
+                        <h3>Оқи отырыңыз</h3>
+                        <hr class="title-01">
+                        <hr class="title-02">
+                    </div>
+                    <div class="recommend__items">
+                        {% for article in oki_otiriniz %}
+                        <div class="recommend__item">
+                            <a href="{{ article.get_absolute_url }}">
+                                <img src="{{ article.preview.url }}" alt="">
+                                <p>{{ article.name }}</p>
+                                <p>{{ article.looks }}</p>
+                            </a>
+                        </div>
+                        {% endfor %}
+                    </div>
+                </div>
+            </div>
+        </section>
+    </section>
+    <!-- <div class="searchForm">
+        <form action="#!">
+            <input type="search" placeholder="Мақала тақырыбы ...">
+        </form>
+    </div> -->
+
+   {% include 'components/footer.html' %}
+
+
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sharer.js@latest/sharer.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+    <script>
+        async function increaseLike() {
+            const articleId = {{ object.id }}
+            console.log(articleId);
+            let promise = await fetch('/increase-like/' + articleId)
+
+            if (promise.ok) {
+                const likeText = document.querySelector('.likeBtn')
+                console.log(likeText)
+                let json = await promise.json()
+                console.log(json);
+                likeText.innerHTML = `<i class="far fa-heart"> ${json.likes_count}</i>`;
+            }
+        }
+    </script>
+</body>
+</html>

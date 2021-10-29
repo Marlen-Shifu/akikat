@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+{% load static %}
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" integrity="sha512-1ycn6IcaQQ40/MKBW2W4Rhis/DbILU74C1vSrLJxCq57o941Ym01SwNsOMqvEBFlcgUa6xLiPY/NS5R+E6ztJQ==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+    <link rel="stylesheet" href="https://unpkg.com/swiper@7/swiper-bundle.min.css"/>
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+    <title>Akikat.kz - рухани танымдық, ғылыми портал</title>
+</head>
+<body>
+
+    {% include 'components/header.html' %}
+
+    <section class="article">
+        <div class="container">
+            <div class="article__body">
+                <div class="article-list">
+                    {% if single %}
+                    <div class="article-title">
+                        <h3>{{ title }}</h3>
+                        <hr>
+                    </div>
+                    {% else %}
+                    <div class="article-filter">
+                        <a href="#!" class="selected-article">Аллаға иман</a>
+                        <a href="article-mindet.html">Пайғамбарлық <br> міндет</a>
+                        <a href="article-akiret.html">Ақырет <br> ақиқаты</a>
+                        <a href="article-kitaptar.html">Қасиетті <br> кітаптар</a>
+                        <a href="article-perishteler.html">Періштелер</a>
+                        <a href="article-tagdyr.html">Тағдыр <br> мәселесі</a>
+                    </div>
+                    {% endif %}
+
+                    {% for article in object_list %}
+                    <div class="{% if single %}article-item1{% else %}article-item{% endif %}">
+                        <div class="article-item_img">
+                            <img src="{{ article.preview.url }}" alt="">
+                        </div>
+                        <div class="article-item_info">
+                            <h3>{{ article.name }}</h3>
+                            <p>         {{ article.short_description }}</p>
+                            <a href="{{ article.get_absolute_url }}">Жалғасын оқу <img src="{% static 'img/fi_arrow-right.png' %}" alt=""></a>
+                        </div>
+                    </div>
+                    {% endfor %}
+
+
+                    <div class="article-pagination">
+
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}"><</a>
+                        {% endif %}
+
+                        {% if page_obj.previous_page_number|add:"-1" > 1 %}
+                            <a href="?page=1">1</a>
+                            <a href="#!">...</a>
+                        {% endif %}
+
+                        {% if page_obj.has_previous %}
+                            <a href="?page={{ page_obj.previous_page_number }}">{{ page_obj.previous_page_number }}</a>
+                        {% endif %}
+
+                        <a href="#!" class="active-page">{{ page_obj.number }}</a>
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">{{ page_obj.next_page_number }}</a>
+                        {% endif %}
+
+                        {% if page_obj.next_page_number|add:"1" < page_obj.paginator.num_pages %}
+                            <a href="#!">...</a>
+                            <a href="?page={{ page_obj.paginator.num_pages }}">{{ page_obj.paginator.num_pages }}</a>
+                        {% endif %}
+
+                        {% if page_obj.has_next %}
+                            <a href="?page={{ page_obj.next_page_number }}">></a>
+                        {% endif %}
+                    </div>
+                </div>
+                <div class="article-aside">
+                    <div class="artice-aside_popular">
+                        <div class="article-aside_popular-title">
+                            <h2>Танымал мақалалар</h2>
+                            <hr class="title-01">
+                            <hr class="title-02">
+                        </div>
+                        <div class="article-aside_popular-list">
+                            <div class="article-aside_popular-list-row">
+                                <a href="{{ tanimal1.get_absolute_url }}"><img src="{{ tanimal1.preview.url }}" alt=""><p>{{ tanimal1.name }}</p></a>
+                                <a href="{{ tanimal2.get_absolute_url }}"><img src="{{ tanimal2.preview.url }}" alt=""><p>{{ tanimal2.name }}</p></a>
+                            </div>
+                            <div class="article-aside_popular-list-col">
+                                <a href="{{ tanimal3.get_absolute_url }}"><img src="{{ tanimal3.preview.url }}" alt=""><p>{{ tanimal3.name }}</p></a>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="article-aside_most-seen">
+                        <div class="article-aside_most-seen_title">
+                            <h2>Көп қаралғандар</h2>
+                            <hr class="title-01">
+                            <hr class="title-02">
+                        </div>
+                        <div class="article-aside_most-seen_list">
+                            {% for article in kop_karalgandar %}
+                            <a href="{{ article.get_absolute_url }}">
+                                <h3>{{ article.name }}</h3>
+                                <p>{{ article.short_description }}</p>
+                                <h5><img src="{% static 'img/seen.png' %}" alt="">{{ article.looks }}</h5>
+                            </a>
+                            {% endfor %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- <div class="searchForm">
+        <form action="#!">
+            <input type="search" placeholder="Мақала тақырыбы ...">
+        </form>
+    </div> -->
+
+    {% include 'components/footer.html' %}
+
+    <script src="https://unpkg.com/swiper@7/swiper-bundle.min.js"></script>
+    <script src="{% static 'js/main.js' %}"></script>
+</body>
+</html>
