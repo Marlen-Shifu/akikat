@@ -85,7 +85,7 @@ class SearchPage(ListView):
     def get_context_data(self, *, object_list=None, **kwargs):
         context = super(SearchPage, self).get_context_data(object_list=object_list, **kwargs)
         context['single'] = True
-        context['title'] = 'Іздеуінің нәтижесі'
+        context['title'] = 'Іздеудің нәтижесі'
 
         articles = Article.objects.all().order_by('-looks')
 
